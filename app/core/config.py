@@ -21,7 +21,7 @@ class Config(BaseSettings):
     @property
     def db_url(self) -> str:
         """Construct the database URL."""
-        return f"postgresql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+        return f"postgresql+asyncpg://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
     
     class Config:
         env_file = ".env" if os.getenv("ENV", "development") == "development" else None
