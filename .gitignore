@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.venv/
+*.py[cod]
+.python-version
+
+# IDEs
+.env
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+tests/__pycache__/
