@@ -19,6 +19,8 @@ class Config(BaseSettings):
     debug: bool = False
     secret_key: str = "SUPER_SECRET_KEY_CHANGE_THIS"
     jwt_lifetime_seconds: int = 3600
+    google_oauth_client_id: str | None = None
+    google_oauth_client_secret: str | None = None
 
     @property
     def db_url(self) -> str:

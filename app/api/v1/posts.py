@@ -1,8 +1,9 @@
 from http.client import HTTPException
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from schemas.posts import PostCreate
 from services.post_services import get_all_posts, insert_post
 from api.v1.auth import current_active_user
+from models.user import User
 
 router = APIRouter()
 

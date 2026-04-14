@@ -3,7 +3,11 @@ from typing import List
 
 from sqlalchemy import ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from fastapi_users.db import SQLAlchemyBaseUserTable
+from fastapi_users.db import SQLAlchemyBaseUserTable, SQLAlchemyBaseOAuthAccountTable
+
+class OAuthAccount(SQLAlchemyBaseOAuthAccountTable[int], Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", ondelete="cascade"), nullable=False)
 
 class User(SQLAlchemyBaseUserTable[int], Base):
     __tablename__ = "users"
@@ -11,6 +15,11 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     organization: Mapped[str] = mapped_column(String(255), nullable=True)
+    
+    # OAuth Accounts
+    oauth_accounts: Mapped[List["OAuthAccount"]] = relationship(
+        "OAuthAccount", lazy="joined", cascade="all, delete"
+    )
     
     groups_created: Mapped[List["Group"]] = relationship(back_populates="owner")
     

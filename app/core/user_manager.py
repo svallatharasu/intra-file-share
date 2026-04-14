@@ -4,12 +4,12 @@ from fastapi_users import BaseUserManager, IntegerIDMixin
 from fastapi_users.db import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models.user import User
+from models.user import User, OAuthAccount
 from core.db_session import get_async_session
 from core.config import config
 
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):
-    yield SQLAlchemyUserDatabase(session, User)
+    yield SQLAlchemyUserDatabase(session, User, OAuthAccount)
 
 class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
     reset_password_token_secret = config.secret_key
