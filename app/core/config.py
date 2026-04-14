@@ -17,6 +17,8 @@ class Config(BaseSettings):
     sentry_dsn: str
     environment: str
     debug: bool = False
+    secret_key: str = "SUPER_SECRET_KEY_CHANGE_THIS"
+    jwt_lifetime_seconds: int = 3600
 
     @property
     def db_url(self) -> str:
