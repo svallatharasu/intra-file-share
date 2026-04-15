@@ -1,22 +1,13 @@
-fake_data = {
-    "user1": [
-        {"title": "Post 1", "content": "Content of Post 1"},
-        {"title": "Post 2", "content": "Content of Post 2"},
-        {"title": "Post 3", "content": "Content of Post 3"},
-    ],
-    "user2": [
-        {"title": "Another Post", "content": "Hello world"}
-    ]
-}
+from sqlalchemy.orm import Session
+from fastapi import UploadFile
+from models.post import Post
 
-def get_all_posts(user_id: str, offset: int, limit: int):
-    posts = fake_data.get(user_id, [])
-    return posts[offset:offset + limit]
+def get_all_posts(db: Session, user_id: int, offset: int, limit: int):
+    pass
 
-def insert_post(user_id: str, title: str, content: str):
-    new_post = {"title": title, "content": content}
-    if user_id in fake_data:
-        fake_data[user_id].append(new_post)
-    else:
-        fake_data[user_id] = [new_post]
-    return new_post
+def get_group_posts(db: Session, group_id: int, offset: int, limit: int):
+    pass
+
+def insert_post(db: Session, user_id: int, group_id: int | None, file: UploadFile):
+    # TODO: Implement file saving logic (local disk or S3)
+    pass
