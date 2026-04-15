@@ -24,7 +24,10 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     groups_created: Mapped[List["Group"]] = relationship(back_populates="owner")
     
     # 1:M with Post (owner_id)
-    posts_owned: Mapped[List["Post"]] = relationship(back_populates="owner")
+    posts_owned: Mapped[List["Post"]] = relationship(foreign_keys="Post.owner_id", back_populates="owner")
+    
+    # 1:M with Post (recipient_id) - direct shares
+    posts_received: Mapped[List["Post"]] = relationship(foreign_keys="Post.recipient_id", back_populates="recipient")
     
     # 1:M with Comment (user_id)
     comments: Mapped[List["Comment"]] = relationship(back_populates="user")

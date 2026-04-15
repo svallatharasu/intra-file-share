@@ -9,7 +9,7 @@ import uvicorn
 from core.config import config
 from core.logging import init_sentry
 from contextlib import asynccontextmanager
-from api.v1 import posts, auth, users
+from api.v1 import posts, auth, users, groups, comments, search
 
 
 init_sentry()
@@ -40,7 +40,9 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.include_router(posts.router, prefix="/api/v1/posts")
 app.include_router(auth.router, prefix="/api/v1/auth")
 app.include_router(users.router, prefix="/api/v1/users")
-
+app.include_router(groups.router, prefix="/api/v1/groups")
+app.include_router(comments.router, prefix="/api/v1/comments")
+app.include_router(search.router, prefix="/api/v1/search")
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",

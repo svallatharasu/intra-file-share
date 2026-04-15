@@ -12,10 +12,12 @@ class Post(Base):
     file_type: Mapped[str] = mapped_column(String(50), nullable=False)
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"), nullable=True)
+    recipient_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=True)
     is_deleted: Mapped[bool] = mapped_column(default=False)
 
     # Relationships
-    owner: Mapped["User"] = relationship(back_populates="posts_owned")
+    owner: Mapped["User"] = relationship(foreign_keys=[owner_id], back_populates="posts_owned")
+    recipient: Mapped["User"] = relationship(foreign_keys=[recipient_id], back_populates="posts_received")
     group: Mapped["Group"] = relationship(back_populates="posts")
     comments: Mapped[List["Comment"]] = relationship(back_populates="post")
 
